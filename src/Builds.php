@@ -45,10 +45,11 @@ class Builds implements Iterator, ExtendedPromiseInterface, CancellablePromiseIn
 
     protected function createBuilds($json)
     {
-        $builds = [];
-        foreach ($json->builds as $build) {
-            $builds[] = new Build($this->repository, $build);
-        }
-        return $builds;
+        return array_map(function ($build) {
+            return new Build(
+                $this->repository,
+                $build
+            );
+        }, $json->builds);
     }
 }
